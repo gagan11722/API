@@ -59,7 +59,7 @@ function displayResults(data, searchedWord) {
         return;
     }
 
-    // Check if API returned suggestions instead of definitions
+  
     if (typeof data[0] === 'string') {
         showError(`Word not found. Did you mean: ${data.slice(0, 5).join(', ')}?`);
         return;
@@ -68,7 +68,7 @@ function displayResults(data, searchedWord) {
     // Get the first entry
     let entry = data[0];
     
-    // Create word title using semantic tags and DOM manipulation
+   
     let titleHeader = document.createElement('header');
     titleHeader.className = 'word-title';
     titleHeader.textContent = entry.hwi.hw.replace(/\*/g, '');
@@ -86,11 +86,11 @@ function displayResults(data, searchedWord) {
     }
     infoPara.textContent = infoText;
 
-    // Create definition section using semantic tags
+   
     let defSection = document.createElement('article');
     defSection.className = 'definition-section';
 
-    // Part of speech
+    
     if (entry.fl) {
         let posHeader = document.createElement('h2');
         posHeader.className = 'part-of-speech';
@@ -105,7 +105,7 @@ function displayResults(data, searchedWord) {
         defPara.textContent = `1. ${entry.shortdef[0]}`;
         defSection.appendChild(defPara);
 
-        // Add additional definitions if available
+       
         if (entry.shortdef.length > 1) {
             for (let i = 1; i < Math.min(entry.shortdef.length, 3); i++) {
                 let additionalDef = document.createElement('p');
