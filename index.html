@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Dictionary App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Dictionary Lookup</h1>
+        
+        <div class="instructions">
+            <p><strong>How to use:</strong> Enter any English word and click "Search" to get its definition from the Merriam-Webster Dictionary.</p>
+        </div>
+
+        <div class="search-box">
+            <input 
+                type="text" 
+                id="wordInput" 
+                placeholder="Enter a word (e.g., 'serendipity')"
+                autocomplete="off"
+            >
+            <button id="searchBtn">Search</button>
+        </div>
+
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Looking up definition...</p>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="result-container" id="resultContainer"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
