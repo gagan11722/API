@@ -1,13 +1,14 @@
 // API Configuration
-const API_KEY = '2251d905-4614-48fb-afac-177d429bcee4';
-const API_URL = 'https://www.dictionaryapi.com/api/v3/references/collegiate/json/';
+
+let API_KEY = '2251d905-4614-48fb-afac-177d429bcee4';
+let API_URL = 'https://www.dictionaryapi.com/api/v3/references/collegiate/json/';
 
 // DOM Elements
-const wordInput = document.getElementById('wordInput');
-const searchBtn = document.getElementById('searchBtn');
-const resultContainer = document.getElementById('resultContainer');
-const errorMessage = document.getElementById('errorMessage');
-const loadingDiv = document.querySelector('.loading');
+let wordInput = document.getElementById('wordInput');
+let searchBtn = document.getElementById('searchBtn');
+let resultContainer = document.getElementById('resultContainer');
+let errorMessage = document.getElementById('errorMessage');
+let loadingDiv = document.querySelector('.loading');
 
 // Event Listeners
 searchBtn.addEventListener('click', searchWord);
@@ -19,7 +20,7 @@ wordInput.addEventListener('keypress', function(e) {
 
 // Main search function
 function searchWord() {
-    const word = wordInput.value.trim().toLowerCase();
+    let word = wordInput.value.trim().toLowerCase();
     
     // Validation
     if (!word) {
@@ -37,26 +38,16 @@ function searchWord() {
     showLoading(true);
     disableButton(true);
 
-    // Fetch data from API
-    const url = `${API_URL}${word}?key=${API_KEY}`;
+    // Fetch data from API (following professor's style)
+    let url = `${API_URL}${word}?key=${API_KEY}`;
     
     fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
+            console.log(data);
             showLoading(false);
             disableButton(false);
             displayResults(data, word);
-        })
-        .catch(error => {
-            showLoading(false);
-            disableButton(false);
-            showError('Failed to fetch definition. Please check your internet connection and API key.');
-            console.error('Error:', error);
         });
 }
 
@@ -75,16 +66,16 @@ function displayResults(data, searchedWord) {
     }
 
     // Get the first entry
-    const entry = data[0];
+    let entry = data[0];
     
-    // Create word title
-    const titleDiv = document.createElement('div');
-    titleDiv.className = 'word-title';
-    titleDiv.textContent = entry.hwi.hw.replace(/\*/g, '');
+    // Create word title using semantic tags and DOM manipulation
+    let titleHeader = document.createElement('header');
+    titleHeader.className = 'word-title';
+    titleHeader.textContent = entry.hwi.hw.replace(/\*/g, '');
     
     // Create word info (pronunciation, part of speech)
-    const infoDiv = document.createElement('div');
-    infoDiv.className = 'word-info';
+    let infoPara = document.createElement('p');
+    infoPara.className = 'word-info';
     
     let infoText = '';
     if (entry.fl) {
@@ -93,31 +84,31 @@ function displayResults(data, searchedWord) {
     if (entry.hwi.prs && entry.hwi.prs[0] && entry.hwi.prs[0].mw) {
         infoText += ` | /${entry.hwi.prs[0].mw}/`;
     }
-    infoDiv.textContent = infoText;
+    infoPara.textContent = infoText;
 
-    // Create definition section
-    const defSection = document.createElement('div');
+    // Create definition section using semantic tags
+    let defSection = document.createElement('article');
     defSection.className = 'definition-section';
 
     // Part of speech
     if (entry.fl) {
-        const posDiv = document.createElement('div');
-        posDiv.className = 'part-of-speech';
-        posDiv.textContent = entry.fl;
-        defSection.appendChild(posDiv);
+        let posHeader = document.createElement('h2');
+        posHeader.className = 'part-of-speech';
+        posHeader.textContent = entry.fl;
+        defSection.appendChild(posHeader);
     }
 
     // Get first definition
     if (entry.shortdef && entry.shortdef.length > 0) {
-        const defDiv = document.createElement('div');
-        defDiv.className = 'definition';
-        defDiv.textContent = `1. ${entry.shortdef[0]}`;
-        defSection.appendChild(defDiv);
+        let defPara = document.createElement('p');
+        defPara.className = 'definition';
+        defPara.textContent = `1. ${entry.shortdef[0]}`;
+        defSection.appendChild(defPara);
 
         // Add additional definitions if available
         if (entry.shortdef.length > 1) {
             for (let i = 1; i < Math.min(entry.shortdef.length, 3); i++) {
-                const additionalDef = document.createElement('div');
+                let additionalDef = document.createElement('p');
                 additionalDef.className = 'definition';
                 additionalDef.textContent = `${i + 1}. ${entry.shortdef[i]}`;
                 defSection.appendChild(additionalDef);
@@ -125,10 +116,10 @@ function displayResults(data, searchedWord) {
         }
     }
 
-    // Clear and populate result container
+    // Clear and populate result container using DOM manipulation
     resultContainer.innerHTML = '';
-    resultContainer.appendChild(titleDiv);
-    resultContainer.appendChild(infoDiv);
+    resultContainer.appendChild(titleHeader);
+    resultContainer.appendChild(infoPara);
     resultContainer.appendChild(defSection);
     resultContainer.style.display = 'block';
 }
