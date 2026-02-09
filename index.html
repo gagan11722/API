@@ -7,14 +7,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>📚 Dictionary Lookup</h1>
+    <main class="container">
+        <header>
+            <h1>📚 Dictionary Lookup</h1>
+        </header>
         
-        <div class="instructions">
+        <section class="instructions">
             <p><strong>How to use:</strong> Enter any English word and click "Search" to get its definition from the Merriam-Webster Dictionary.</p>
-        </div>
+        </section>
 
-        <div class="search-box">
+        <section class="search-box">
             <input 
                 type="text" 
                 id="wordInput" 
@@ -22,17 +24,17 @@
                 autocomplete="off"
             >
             <button id="searchBtn">Search</button>
-        </div>
+        </section>
 
-        <div class="loading">
-            <div class="spinner"></div>
+        <section class="loading">
+            <article class="spinner"></article>
             <p>Looking up definition...</p>
-        </div>
+        </section>
 
-        <div class="error-message" id="errorMessage"></div>
+        <aside class="error-message" id="errorMessage"></aside>
 
-        <div class="result-container" id="resultContainer"></div>
-    </div>
+        <section class="result-container" id="resultContainer"></section>
+    </main>
 
     <script src="script.js"></script>
 </body>
