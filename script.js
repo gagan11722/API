@@ -38,7 +38,7 @@ function searchWord() {
     showLoading(true);
     disableButton(true);
 
-    // Fetch data from API (following professor's style)
+    // Fetch data from API 
     let url = `${API_URL}${word}?key=${API_KEY}`;
     
     fetch(url)
